@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="OCRTheme" parent="OCRTheme.Base">
+    </style>
+
+    <style name="OCRTheme.Base" parent="android:Theme.Black.NoTitleBar">
+    </style>
+
+</resources>

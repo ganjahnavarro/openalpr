@@ -1,0 +1,1 @@
+# Reference Android App demonstrating the use of [Automated License Plate Recognition library](http://www.openalpr.com/)

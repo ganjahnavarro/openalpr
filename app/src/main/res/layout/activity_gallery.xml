@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#263238"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:text="License Plate OCR"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/tapInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Tap item for details, Long press to delete"
+        android:layout_marginBottom="15sp"
+        android:textColor="#50a0ef"
+        android:textSize="12sp"/>
+
+    <ListView
+        android:id="@+id/list_snapshot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
+
+</LinearLayout>

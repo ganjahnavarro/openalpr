@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">License Plate OCR</string>
+    <string name="cancelBtnTxt">Cancel</string>
+    <string name="plate_label">Plate Number</string>
+    <string name="duration">Duration</string>
+    <string name="save_btn_label">Save</string>
+    <string name="take_picture_btn_label">Take Picture</string>
+    <string name="recognition_error">Error recognizing plate number in the picture</string>
+    <string name="license_plate_ocr">License Plate OCR</string>
+    <string name="facebook_app_id">1818159598438751</string>
+    <string name="guest_sign_on">Continue as a guest</string>
+
+</resources>

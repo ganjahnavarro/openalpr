@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.openalpr.app">
+
+    <uses-feature android:name="android.hardware.camera"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/OCRTheme">
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
+        <activity
+            android:name="org.openalpr.app.SplashScreenActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.openalpr.app.LoginActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name="org.openalpr.app.MenuActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name="org.openalpr.app.MainActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name="org.openalpr.app.SettingsActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name="org.openalpr.app.AboutActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name="org.openalpr.app.GalleryActivity"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <receiver
+            android:name="org.openalpr.core.sms.SmsReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
