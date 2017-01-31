@@ -1,30 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="horizontal"
-              android:paddingBottom="20dp"
-              android:weightSum="11">
-
-    <ImageView
-        android:id="@+id/snapshot_preview"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_weight="5"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:paddingLeft="10dp"
-        android:paddingRight="5dp"
-        android:src="@drawable/coming_soon"/>
-
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/snapshot_label"
-              android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:layout_weight="6"
-              android:paddingLeft="5dp"
-              android:paddingRight="10dp"
-              android:text="@string/plate_label">
-    </TextView>
+              android:orientation="vertical"
+              android:paddingBottom="20dp">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:weightSum="11">
+
+        <ImageView
+            android:id="@+id/snapshot_preview"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_weight="6"
+            android:adjustViewBounds="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/facebook"/>
+
+        <TextView
+            android:id="@+id/snapshot_label"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:text="@string/plate_label">
+        </TextView>
+    </LinearLayout>
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:id="@+id/optionsLayout"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:visibility="gone"
+                 android:stretchColumns="*">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp">
+
+            <Button
+                android:id="@+id/btnViewDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_info"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/icon_info"
+                android:gravity="start|center_vertical"
+                android:text="View Details"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnDeleteItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_delete"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/icon_delete"
+                android:gravity="start|center_vertical"
+                android:text="Delete"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/recognizedRowOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp">
+
+            <Button
+                android:id="@+id/btnSendEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_mailbox"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/icon_mailbox"
+                android:gravity="start|center_vertical"
+                android:text="Email LTO"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnShareFacebook"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_share"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/icon_share"
+                android:gravity="start|center_vertical"
+                android:text="Facebook Share"
+                android:textAllCaps="false"
+                android:textSize="12sp" />
+        </TableRow>
+
+    </TableLayout>
 
 </LinearLayout>

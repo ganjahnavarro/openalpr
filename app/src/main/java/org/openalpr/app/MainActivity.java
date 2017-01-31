@@ -53,6 +53,7 @@ import static org.openalpr.app.AppConstants.OPENALPR_CONF_FILE;
 import static org.openalpr.app.AppConstants.PREF_INSTALLED_KEY;
 import static org.openalpr.app.AppConstants.REQUEST_IMAGE_CAPTURE;
 import static org.openalpr.app.AppConstants.RUNTIME_DATA_DIR_ASSET;
+import static org.openalpr.core.database.VerificationStatus.NOT_RECOGNIZED;
 
 
 public class MainActivity extends Activity implements AsyncListener<AlprResult> {
@@ -69,9 +70,11 @@ public class MainActivity extends Activity implements AsyncListener<AlprResult> 
     private TextView errorText;
     private ProgressDialog progressDialog;
 
-    private Button sendSmsButton;
+    private Button primaryAction;
     private BroadcastReceiver smsSentBroadcastReceiver;
     private BroadcastReceiver smsDeliveredBroadcastReceiver;
+
+    private Boolean successfulRecognition;
 
     Button.OnClickListener takePhotoBtnClickListener = new Button.OnClickListener() {
         @Override
@@ -106,10 +109,20 @@ public class MainActivity extends Activity implements AsyncListener<AlprResult> 
         registerReceiver(smsSentBroadcastReceiver, new IntentFilter(SmsHelper.SMS_SENT));
         registerReceiver(smsDeliveredBroadcastReceiver, new IntentFilter(SmsHelper.SMS_DELIVERED));
 
-        sendSmsButton = (Button) findViewById(R.id.sendSms);
-        sendSmsButton.setOnClickListener(new View.OnClickListener() {
+        primaryAction = (Button) findViewById(R.id.primaryAction);
+        primaryAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                insertPlateRecognition();
+
+                if (successfulRecognition) {
+                    sendSms(view);
+                } else {
+                    finish();
+                }
+            }
+
+            private void sendSms(final View view) {
                 if (plate.getText() == null || String.valueOf(plate.getText()).isEmpty()) {
                     Toaster.show(view.getContext(), "No plate number present, please take another picture.");
                     return;
@@ -122,9 +135,8 @@ public class MainActivity extends Activity implements AsyncListener<AlprResult> 
                             case DialogInterface.BUTTON_POSITIVE:
                                 String message = FORMAT_PLATE_NUMBER_INQUIRY;
                                 helper.sendMessage(LTO_NUMBER, message.replace(FORMAT_PLATE_NUMBER_KEY, plate.getText()));
-                                insertSnapshot();
                                 Toaster.show(view.getContext(), "Vehicle details request was sent. Please check back after few minutes.");
-                                sendSmsButton.setVisibility(View.INVISIBLE);
+                                primaryAction.setVisibility(View.INVISIBLE);
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -134,7 +146,7 @@ public class MainActivity extends Activity implements AsyncListener<AlprResult> 
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setMessage("This actions requires P2.00 load. Continue?")
+                builder.setMessage("This actions requires P2.50 load. Continue?")
                         .setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("Cancel", dialogClickListener).show();
             }
@@ -168,8 +180,11 @@ public class MainActivity extends Activity implements AsyncListener<AlprResult> 
         };
     }
 
-    private void insertSnapshot() {
-        databaseHelper.insertSnapshot(mCurrentPhotoPath, String.valueOf(plate.getText()));
+    private void insertPlateRecognition() {
+        VerificationStatus status = successfulRecognition ? VerificationStatus.PENDING : NOT_RECOGNIZED;
+        String plateNumber = successfulRecognition ? String.valueOf(plate.getText()) : null;
+        Long id = databaseHelper.insertSnapshot(mCurrentPhotoPath, plateNumber, status);
+        Log.d(this.getClass().getSimpleName(), "New row id: " + id);
     }
 
     @Override
@@ -398,11 +413,15 @@ public class MainActivity extends Activity implements AsyncListener<AlprResult> 
                 AlprResultItem resultItem = resultItems.get(0);
                 setPlate(resultItem.getPlate());
                 setProcessingTime(alprResult.getProcessingTime());
-                sendSmsButton.setVisibility(View.VISIBLE);
+
+                successfulRecognition = true;
+                primaryAction.setText("Get Vehicle Details");
             }
             cleanUp();
         } else {
-            sendSmsButton.setVisibility(View.INVISIBLE);
+            successfulRecognition = false;
+            primaryAction.setText("Save in gallery");
+
             setErrorText(getString(R.string.recognition_error));
             cleanUp();
         }

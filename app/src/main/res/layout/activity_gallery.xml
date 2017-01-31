@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Tap item for details, Long press to delete"
+        android:text="Tap an item for more options"
         android:layout_marginBottom="15sp"
         android:textColor="#50a0ef"
         android:textSize="12sp"/>

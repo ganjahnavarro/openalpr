@@ -6,6 +6,6 @@ package org.openalpr.core.database;
 
 public enum VerificationStatus {
 
-    PENDING, REQUEST_FAILURE, REQUESTED, PROCESSED
+    PENDING, REQUEST_FAILURE, REQUESTED, PROCESSED, NOT_RECOGNIZED
 
 }

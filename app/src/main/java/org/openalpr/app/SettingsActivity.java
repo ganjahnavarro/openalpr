@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -29,6 +28,7 @@ public class SettingsActivity extends Activity {
 //        smsSetup();
         callSetup();
 //        databaseSetup();
+//        emailSetup();
     }
 
 //    private void smsSetup() {
@@ -77,6 +77,26 @@ public class SettingsActivity extends Activity {
 //        }
 //    }
 //
+
+//    private void emailSetup() {
+//        ImageView callLink = (ImageView) findViewById(R.id.call911);
+//        callLink.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+//                intent.setType("message/rfc822");
+//                intent.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+//                intent.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+//                intent.putExtra(Intent.EXTRA_TEXT   , "body of email");
+//                try {
+//                    startActivity(Intent.createChooser(intent, "Send mail..."));
+//                } catch (android.content.ActivityNotFoundException ex) {
+//                    Toast.makeText(view.getContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
+
     private void callSetup() {
         requestCallPermission();
 
@@ -87,7 +107,6 @@ public class SettingsActivity extends Activity {
         callLinkMessage.setOnClickListener(callOnClickListener());
     }
 
-    @NonNull
     private View.OnClickListener callOnClickListener() {
         return new View.OnClickListener() {
             @Override

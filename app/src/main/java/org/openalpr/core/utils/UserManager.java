@@ -30,4 +30,8 @@ public class UserManager {
         this.loggedUser = loggedUser;
     }
 
+    public boolean isGuestUser() {
+        return loggedUser != null;
+    }
+
 }

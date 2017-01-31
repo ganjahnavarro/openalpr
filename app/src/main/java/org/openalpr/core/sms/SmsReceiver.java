@@ -31,7 +31,8 @@ public class SmsReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         SmsMessage[] messages;
 
-        String message = "";
+        String message = null;
+        String phoneNumber = null;
 
         if (bundle != null) {
             Object[] pdus = (Object[]) bundle.get("pdus");
@@ -39,12 +40,14 @@ public class SmsReceiver extends BroadcastReceiver {
 
             for (int i = 0; i < messages.length; i++) {
                 messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+                phoneNumber = messages[i].getDisplayOriginatingAddress();
                 message = messages[i].getMessageBody();
             }
 
-            Log.d(TAG, message);
+            Log.d(TAG, "Message: " + message);
+            Log.d(TAG, "Phone Number: " + phoneNumber);
 
-            if (message != null) {
+            if (message != null && phoneNumber != null && phoneNumber.equals("2600")) {
                 databaseHelper.updateLatestRecord(VerificationStatus.PROCESSED, message);
             }
         }

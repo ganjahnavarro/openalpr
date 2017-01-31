@@ -81,19 +81,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String updateScript = "UPDATE " + Snapshot.TABLE_NAME
                 + " SET " + Snapshot.COLUMN_NAME_STATUS + " = '" + status.toString() + "'"
                 + (result != null ? ", " + Snapshot.COLUMN_NAME_RESULT + " = '" + result + "'" : "")
-                + " WHERE " + Snapshot._ID + " = (SELECT MAX(" + Snapshot._ID + ") FROM " + Snapshot.TABLE_NAME + ")";
+                + " WHERE " + Snapshot._ID + " = ("
+                    + " SELECT MAX(" + Snapshot._ID + ") FROM " + Snapshot.TABLE_NAME
+                    + " WHERE " + Snapshot.COLUMN_NAME_STATUS + " != '" + VerificationStatus.PROCESSED.toString() + "'"
+                + ")";
 
-        Log.d(this.getClass().getSimpleName(), updateScript);
-        database.execSQL(updateScript);
+        try {
+            Log.d(this.getClass().getSimpleName(), updateScript);
+            database.execSQL(updateScript);
+        } catch (Exception e) {
+            Log.e(this.getClass().getSimpleName(), e.getMessage());
+        }
     }
 
-    public Long insertSnapshot(String fileName, String plateNumber) {
+    public Long insertSnapshot(String fileName, String plateNumber, VerificationStatus status) {
         ContentValues values = new ContentValues();
         values.put(Snapshot.COLUMN_NAME_IMAGE_FILE_NAME, fileName);
         values.put(Snapshot.COLUMN_NAME_PLATE_NUMBER, plateNumber);
         values.put(Snapshot.COLUMN_NAME_CAPTURED_BY, UserManager.getInstance().getLoggedUser());
         values.put(Snapshot.COLUMN_NAME_CAPTURED_DATE, new Date().getTime());
-        values.put(Snapshot.COLUMN_NAME_STATUS, VerificationStatus.PENDING.toString());
+        values.put(Snapshot.COLUMN_NAME_STATUS, status.toString());
         return getWritableDatabase().insert(Snapshot.TABLE_NAME, null, values);
     }
 
